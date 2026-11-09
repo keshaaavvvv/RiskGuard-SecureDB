@@ -1,6 +1,10 @@
-# RiskGuard SecureDB (No-AI Edition)
+# RiskGuard SecureDB 
 
 RiskGuard SecureDB is an educational Flask application combining a student risk register with a defensive, rule-based SQL query analyzer. This edition removes Gemini and all external AI integration. The analyzer works locally and does not execute submitted SQL.
+
+<img width="1600" height="848" alt="image" src="https://github.com/user-attachments/assets/4c412ee0-d332-4b73-8cc3-b6e243ac3301" />
+<img width="1600" height="767" alt="image" src="https://github.com/user-attachments/assets/244b63d6-1dda-4ab2-a1cd-802fd921b1ac" />
+<img width="1600" height="803" alt="image" src="https://github.com/user-attachments/assets/9fcd3e05-4a60-4c10-88b2-32571898833c" />
 
 ## Features retained
 
