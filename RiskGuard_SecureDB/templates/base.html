@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>{% block title %}RiskGuard SecureDB{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+(function () {
+  try {
+    const saved = localStorage.getItem('riskguard-theme');
+    const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+    document.documentElement.dataset.theme = theme;
+  } catch (_) {}
+})();
+</script>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="{{ url_for('index') }}"><span class="logo">RG</span><span>RiskGuard <small>SecureDB</small></span></a>
+  <div class="navright">
+    <div class="navlinks">{% if current_user %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('scanner') }}">SQL Analyzer</a><a href="{{ url_for('history') }}">Scan history</a>
+      {% if current_user.role == 'admin' %}<a href="{{ url_for('students') }}">Students</a><a href="{{ url_for('new_risk') }}">New risk</a>{% endif %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}<a href="{{ url_for('login') }}">Login</a><a class="navcta" href="{{ url_for('register') }}">Register</a>{% endif %}</div>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch color theme" title="Switch color theme"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark</span></button>
+  </div>
+</nav>
+<main class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+    <p>
+        RiskGuard SecureDB · Defensive educational prototype ·
+        Submitted SQL is never executed
+    </p>
+
+    <div class="footer-credit">
+        Made By - Keshav Chauhan, Piyush Bhardwaj & Kritarth Gupta
+    </div>
+</footer>
+<script>
+(function () {
+  const button = document.getElementById('themeToggle');
+  if (!button) return;
+  const icon = button.querySelector('.theme-icon');
+  const label = button.querySelector('.theme-label');
+  function update(theme) {
+    document.documentElement.dataset.theme = theme;
+    icon.textContent = theme === 'dark' ? '☾' : '☀';
+    label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    button.setAttribute('aria-label', 'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme');
+  }
+  let current = document.documentElement.dataset.theme || 'dark';
+  update(current);
+  button.addEventListener('click', function () {
+    current = current === 'dark' ? 'light' : 'dark';
+    update(current);
+    try { localStorage.setItem('riskguard-theme', current); } catch (_) {}
+  });
+})();
+</script>
+</body></html>
